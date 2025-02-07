@@ -1,12 +1,12 @@
 "use client";
 
 import { PORTFOLIO } from "@/src/constants/portfolio/portfolio.ko";
+import { cn } from "@/src/functions/util";
 import gsap from "gsap";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { PortfolioImages } from "./Images";
 import { PortfolioDetailDescription } from "./PortfolioDetailDescription";
-import { isMobile } from "react-device-detect";
-import { cn } from "@/src/functions/util";
 
 const { DATA } = PORTFOLIO;
 
@@ -19,6 +19,11 @@ export const PorfolioDetail: FC<PortfolioItemProps> = ({
   item,
   isShowDetail,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const videoUrl = process.env.NEXT_PUBLIC_VIDEO_URL;
+  const isDev = process.env.NEXT_PUBLIC_ENV === "development";
+
   // 아래 함수는 PortfolioItem과 함께 움직인다.
   const onShowDetail = () => {
     gsap.to(".portfolio-item-title", {
@@ -122,12 +127,13 @@ export const PorfolioDetail: FC<PortfolioItemProps> = ({
       <div className="portfolio-item-title-cover fixed bottom-10 left-14 z-30 w-[50%] break-words font-bold text-white max-lg:w-[90%]">
         <div
           className={cn(
-            "portfolio-item-title mb-5 translate-y-96 uppercase ",
+            "portfolio-item-title mb-5 translate-y-96 uppercase",
             isMobile ? "text-7xl" : "text-7xl"
           )}
         >
           {item.TITLE}
         </div>
+
         <div
           className={cn(
             "portfolio-item-subtitle translate-y-96 leading-relaxed",
@@ -138,6 +144,14 @@ export const PorfolioDetail: FC<PortfolioItemProps> = ({
             <div key={index}>{line}</div>
           ))}
         </div>
+        {isDev && (
+          <button
+            className="transition-all hover:opacity-80"
+            onClick={() => setIsModalOpen(true)}
+          >
+            발표 다시보기 &rarr;
+          </button>
+        )}
       </div>
       <PortfolioDetailDescription item={item} />
       <div className="fixed bottom-10 right-14 z-30 text-right font-bold text-white max-lg:hidden">
@@ -155,6 +169,23 @@ export const PorfolioDetail: FC<PortfolioItemProps> = ({
       >
         <PortfolioImages images={item.INTRODUCTION} />
       </div>
+
+      {isModalOpen && (
+        <div
+          className="fixed left-0 top-0 z-50 h-full w-full bg-black bg-opacity-90"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsModalOpen(false);
+          }}
+        >
+          <video
+            className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transform-gpu rounded-lg shadow-lg"
+            src={videoUrl}
+            onClick={(e) => e.stopPropagation()}
+            controls
+          />
+        </div>
+      )}
     </>
   );
 };

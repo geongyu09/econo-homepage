@@ -1,20 +1,20 @@
 "use client";
 
-import { PORTFOLIO } from "@/src/constants/portfolio/portfolio.ko";
-import { PortfolioTitleImage } from "@/src/components/portfolio/TitleImage";
-import { useEffect, useRef, useState } from "react";
-import { PorfolioDetail } from "./Detail";
+import LeftArrow from "@/public/icons/left-arrow.svg";
 import { PortfolioNavbar } from "@/src/components/portfolio/Navbar";
-import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
-import { Mousewheel, FreeMode, Controller } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/mousewheel";
-import "swiper/css/free-mode";
-import { PortfolioBackImage } from "./BackImage";
-import { HambergerMenu } from "../common/Hamberger";
+import { PortfolioTitleImage } from "@/src/components/portfolio/TitleImage";
+import { PORTFOLIO } from "@/src/constants/portfolio/portfolio.ko";
 import { cn } from "@/src/functions/util";
 import Image from "next/image";
-import LeftArrow from "@/public/icons/left-arrow.svg";
+import { useEffect, useRef, useState } from "react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/mousewheel";
+import { Controller, FreeMode, Mousewheel } from "swiper/modules";
+import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
+import { HambergerMenu } from "../common/Hamberger";
+import { PortfolioBackImage } from "./BackImage";
+import { PorfolioDetail } from "./Detail";
 
 const { DATA } = PORTFOLIO;
 
